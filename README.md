@@ -31,8 +31,11 @@ See the [Demo.java](./src/main/java/info/kupczynski/jnbp/Demo.java) class.
         CurrencyRates rates = client.current(Currency.EUR_A);
         ```
         
+        *returns*:
         ```
-        CurrencyRates{currency=EUR_A, rates=[DailyRate{rateId='214/A/NBP/2016', effectiveDate=2016-11-04, mid=4.3133, bid=null, ask=null}]}
+        CurrencyRates{currency=EUR_A, rates=[
+            DailyRate{rateId='214/A/NBP/2016', effectiveDate=2016-11-04, mid=4.3133, bid=null, ask=null}
+        ]}
         ```
     
     * Series of latest 3 exchange rates
@@ -40,6 +43,7 @@ See the [Demo.java](./src/main/java/info/kupczynski/jnbp/Demo.java) class.
         CurrencyRates rates = client.latest(Currency.EUR_A, 3);
         ```
         
+        *returns*:
         ```
         CurrencyRates{currency=EUR_A, rates=[
             DailyRate{rateId='212/A/NBP/2016', effectiveDate=2016-11-02, mid=4.3169, bid=null, ask=null},
@@ -53,8 +57,13 @@ See the [Demo.java](./src/main/java/info/kupczynski/jnbp/Demo.java) class.
         Optional<CurrencyRates> rates = client.today(Currency.EUR_A);
         ```
         
+        *returns*:
         ```
-        Optional[CurrencyRates{currency=EUR_A, rates=[DailyRate{rateId='214/A/NBP/2016', effectiveDate=2016-11-04, mid=4.3133, bid=null, ask=null}]}]    
+        Optional[
+            CurrencyRates{currency=EUR_A, rates=[
+                DailyRate{rateId='214/A/NBP/2016', effectiveDate=2016-11-04, mid=4.3133, bid=null, ask=null}
+            ]}
+        ]    
         ```
     
     * Exchange rate for a given day (may not exist)
@@ -62,8 +71,13 @@ See the [Demo.java](./src/main/java/info/kupczynski/jnbp/Demo.java) class.
         Optional<CurrencyRates> rates = client.day(Currency.EUR_A, LocalDate.of(2016, 11, 4))
         ```
         
+        *returns*:
         ```
-        Optional[CurrencyRates{currency=EUR_A, rates=[DailyRate{rateId='214/A/NBP/2016', effectiveDate=2016-11-04, mid=4.3133, bid=null, ask=null}]}]
+        Optional[
+            CurrencyRates{currency=EUR_A, rates=[
+                DailyRate{rateId='214/A/NBP/2016', effectiveDate=2016-11-04, mid=4.3133, bid=null, ask=null}
+            ]}
+        ]
         ```
     
     * Exchange rate between two dates 
@@ -71,6 +85,7 @@ See the [Demo.java](./src/main/java/info/kupczynski/jnbp/Demo.java) class.
         CurrencyRates rates = client.range(Currency.EUR_A, LocalDate.of(2016, 11, 2), LocalDate.of(2016, 11, 4));
         ```
         
+        *returns*:
         ```
         CurrencyRates{currency=EUR_A, rates=[
             DailyRate{rateId='212/A/NBP/2016', effectiveDate=2016-11-02, mid=4.3169, bid=null, ask=null},
@@ -84,8 +99,11 @@ See the [Demo.java](./src/main/java/info/kupczynski/jnbp/Demo.java) class.
         CurrencyRates rates = client.current(Currency.KES_B);
         ```
         
+        *returns*:
         ```
-        CurrencyRates{currency=KES_B, rates=[DailyRate{rateId='044/B/NBP/2016', effectiveDate=2016-11-02, mid=0.038352, bid=null, ask=null}]}
+        CurrencyRates{currency=KES_B, rates=[
+            DailyRate{rateId='044/B/NBP/2016', effectiveDate=2016-11-02, mid=0.038352, bid=null, ask=null}
+        ]}
         ```
     
     * Bid-ask rates are stored in table "C"
@@ -93,8 +111,11 @@ See the [Demo.java](./src/main/java/info/kupczynski/jnbp/Demo.java) class.
         CurrencyRates rates = client.current(Currency.EUR_C)
         ```
         
+        *returns*:
         ```
-        CurrencyRates{currency=EUR_C, rates=[DailyRate{rateId='214/C/NBP/2016', effectiveDate=2016-11-04, mid=null, bid=4.2832, ask=4.3698}]}
+        CurrencyRates{currency=EUR_C, rates=[
+            DailyRate{rateId='214/C/NBP/2016', effectiveDate=2016-11-04, mid=null, bid=4.2832, ask=4.3698}
+        ]}
         ```
 
 
