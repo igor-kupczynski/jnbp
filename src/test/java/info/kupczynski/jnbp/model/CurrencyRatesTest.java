@@ -1,6 +1,5 @@
 package info.kupczynski.jnbp.model;
 
-import info.kupczynski.jnbp.JsonTest;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -8,10 +7,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 
+import static info.kupczynski.jnbp.JsonUtils.MAPPER;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class CurrencyRatesTest extends JsonTest {
+public class CurrencyRatesTest {
 
     @Test
     public void shouldDeserializeFromJson() throws IOException {
