@@ -34,10 +34,29 @@ public class ExchangeRatesApiIntegrationTest {
     }
 
     @Test
-    public void shouldReturnValidExchangeRate() throws IOException {
+    public void shouldReturnValidExchangeRateForATable() throws IOException {
         List<DailyRate> rates = api.day("A", "EUR", LocalDate.of(2016, 11, 4)).execute().body().getRates();
 
-        DailyRate expected = new DailyRate("214/A/NBP/2016", LocalDate.of(2016, 11, 4), new BigDecimal("4.3133"));
+        DailyRate expected = new DailyRate("214/A/NBP/2016", LocalDate.of(2016, 11, 4),
+                new BigDecimal("4.3133"), null, null);
+        assertThat(rates, contains(expected));
+    }
+
+    @Test
+    public void shouldReturnValidExchangeRateForBTable() throws IOException {
+        List<DailyRate> rates = api.day("B", "AFN", LocalDate.of(2016, 11, 2)).execute().body().getRates();
+
+        DailyRate expected = new DailyRate("044/B/NBP/2016", LocalDate.of(2016, 11, 2),
+                new BigDecimal("0.059043"), null, null);
+        assertThat(rates, contains(expected));
+    }
+
+    @Test
+    public void shouldReturnValidExchangeRateForCTable() throws IOException {
+        List<DailyRate> rates = api.day("C", "EUR", LocalDate.of(2016, 11, 4)).execute().body().getRates();
+
+        DailyRate expected = new DailyRate("214/C/NBP/2016", LocalDate.of(2016, 11, 4),
+                null, new BigDecimal("4.2832"), new BigDecimal("4.3698"));
         assertThat(rates, contains(expected));
     }
 
@@ -56,9 +75,9 @@ public class ExchangeRatesApiIntegrationTest {
                 .body();
 
         CurrencyRates expected = new CurrencyRates("A", "EUR", Arrays.asList(
-            new DailyRate("212/A/NBP/2016", LocalDate.of(2016, 11, 2), new BigDecimal("4.3169")),
-            new DailyRate("213/A/NBP/2016", LocalDate.of(2016, 11, 3), new BigDecimal("4.3238")),
-            new DailyRate("214/A/NBP/2016", LocalDate.of(2016, 11, 4), new BigDecimal("4.3133"))
+            new DailyRate("212/A/NBP/2016", LocalDate.of(2016, 11, 2), new BigDecimal("4.3169"), null, null),
+            new DailyRate("213/A/NBP/2016", LocalDate.of(2016, 11, 3), new BigDecimal("4.3238"), null, null),
+            new DailyRate("214/A/NBP/2016", LocalDate.of(2016, 11, 4), new BigDecimal("4.3133"), null, null)
         ));
     }
 

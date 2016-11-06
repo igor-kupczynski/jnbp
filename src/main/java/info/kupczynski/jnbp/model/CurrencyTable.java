@@ -7,7 +7,7 @@ package info.kupczynski.jnbp.model;
  */
 public enum CurrencyTable {
     /**
-     * Mid-market rates updated daily, 11:45-12:15; contains the most common currencies.
+     * Mid-market rates updated daily, 11:45-12:15; contains the common currencies.
      */
     A,
 
@@ -17,7 +17,7 @@ public enum CurrencyTable {
     B,
 
     /**
-     * Buy and sell rates updated daily, 7:45-8:15.
+     * Bid and ask rates updated daily, 7:45-8:15.
      */
     C;
 }
