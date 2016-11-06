@@ -9,19 +9,22 @@ import java.util.List;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Objects.requireNonNull;
 
-public class CurrencyRateList {
+/**
+ * Represents a list of daily rates for a given currency
+ */
+public class CurrencyRates {
 
     private final String table;
     private final String currency;
     private final String code;
-    private final List<CurrencyRate> rates;
+    private final List<DailyRate> rates;
 
     @JsonCreator
-    public CurrencyRateList(
+    public CurrencyRates(
             @JsonProperty("table") String table,
             @JsonProperty("currency") String currency,
             @JsonProperty("code") String code,
-            @JsonProperty("rates") List<CurrencyRate> rates) {
+            @JsonProperty("rates") List<DailyRate> rates) {
         this.table = requireNonNull(table);
         this.currency = requireNonNull(currency);
         this.code = requireNonNull(code);
@@ -40,7 +43,7 @@ public class CurrencyRateList {
         return code;
     }
 
-    public List<CurrencyRate> getRates() {
+    public List<DailyRate> getRates() {
         return unmodifiableList(rates);
     }
 
@@ -49,7 +52,7 @@ public class CurrencyRateList {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CurrencyRateList that = (CurrencyRateList) o;
+        CurrencyRates that = (CurrencyRates) o;
 
         if (!table.equals(that.table)) return false;
         if (!currency.equals(that.currency)) return false;
@@ -69,7 +72,7 @@ public class CurrencyRateList {
 
     @Override
     public String toString() {
-        return "CurrencyRateList{" +
+        return "CurrencyRates{" +
                 "table='" + table + '\'' +
                 ", currency='" + currency + '\'' +
                 ", code='" + code + '\'' +

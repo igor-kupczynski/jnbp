@@ -4,30 +4,34 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import static java.util.Objects.requireNonNull;
 
-public class CurrencyRate {
+/**
+ * Represents a currency rate for a given day
+ */
+public class DailyRate {
 
-    private final String number;
-    private final String effectiveDate;
+    private final String rateId;
+    private final LocalDate effectiveDate;
     private final BigDecimal rate;
 
     @JsonCreator
-    public CurrencyRate(
-            @JsonProperty("no") String tableName,
-            @JsonProperty("effectiveDate") String effectiveDate,
+    public DailyRate(
+            @JsonProperty("no") String rateId,
+            @JsonProperty("effectiveDate") LocalDate effectiveDate,
             @JsonProperty("mid") BigDecimal rate) {
-        this.number = requireNonNull(tableName);
+        this.rateId = requireNonNull(rateId);
         this.effectiveDate = requireNonNull(effectiveDate);
         this.rate = requireNonNull(rate);
     }
 
-    public String getNumber() {
-        return number;
+    public String getRateId() {
+        return rateId;
     }
 
-    public String getEffectiveDate() {
+    public LocalDate getEffectiveDate() {
         return effectiveDate;
     }
 
@@ -40,9 +44,9 @@ public class CurrencyRate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CurrencyRate that = (CurrencyRate) o;
+        DailyRate that = (DailyRate) o;
 
-        if (!number.equals(that.number)) return false;
+        if (!rateId.equals(that.rateId)) return false;
         if (!effectiveDate.equals(that.effectiveDate)) return false;
         return rate.equals(that.rate);
 
@@ -50,13 +54,13 @@ public class CurrencyRate {
 
     @Override
     public int hashCode() {
-        return number.hashCode();
+        return rateId.hashCode();
     }
 
     @Override
     public String toString() {
-        return "CurrencyRate{" +
-                "number='" + number + '\'' +
+        return "DailyRate{" +
+                "rateId='" + rateId + '\'' +
                 ", effectiveDate='" + effectiveDate + '\'' +
                 ", rate=" + rate +
                 '}';
