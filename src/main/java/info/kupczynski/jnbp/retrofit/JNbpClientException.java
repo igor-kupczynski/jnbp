@@ -1,5 +1,8 @@
 package info.kupczynski.jnbp.retrofit;
 
+/**
+ * Generic client exception, examine the {@code cause} for more details
+ */
 public class JNbpClientException extends RuntimeException {
 
     public JNbpClientException() {

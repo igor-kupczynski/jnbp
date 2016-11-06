@@ -173,8 +173,8 @@ public enum Currency {
     SEK_C(CurrencyTable.C, "SEK"),
     XDR_C(CurrencyTable.C, "XDR");
 
-    private final CurrencyTable table;
-    private final String code;
+    public final CurrencyTable table;
+    public final String code;
 
     Currency(CurrencyTable table, String code) {
         this.table = table;
