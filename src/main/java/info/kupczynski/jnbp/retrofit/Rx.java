@@ -1,5 +1,6 @@
 package info.kupczynski.jnbp.retrofit;
 
+import info.kupczynski.jnbp.api.UnsuccessfulResponseException;
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import retrofit2.Call;

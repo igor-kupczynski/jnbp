@@ -9,6 +9,7 @@ import io.reactivex.Single;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Demo {
 
@@ -19,6 +20,11 @@ public class Demo {
     private JNbpClient client = JNbpClientFactory.create();
 
     private void run() {
+        LocalDate monthAgo = LocalDate.now().minus(1, ChronoUnit.MONTHS);
+        LocalDate weekAgo = LocalDate.now().minus(1, ChronoUnit.WEEKS);
+        LocalDate today = LocalDate.now();
+
+
         System.out.println("JNbpClient demo");
         System.out.println("===============");
         System.out.println();
@@ -26,13 +32,13 @@ public class Demo {
         banner("Single currency, Euro, Table A");
         demo("Current rate", client.current(Currency.EUR_A));
         demo("Latest 3 rates", client.latest(Currency.EUR_A, 3));
-        demo("Rates from 2016-11-01 to 2016-11-05", client.range(Currency.EUR_A, LocalDate.of(2016, 11, 1), LocalDate.of(2016, 11, 5)));
+        demo(String.format("Rates from %s to %s", weekAgo, today), client.range(Currency.EUR_A, weekAgo, today));
 
         banner("Bid ask rates are stored in table C");
         demo("Latest 3 rates", client.latest(Currency.EUR_C, 3));
 
         banner("Less popular currencies are stored in table B and updated weekly");
-        demo("Rates from 2016-10-01 to 2016-11-01", client.range(Currency.KES_B, LocalDate.of(2016, 10, 1), LocalDate.of(2016, 11, 1)));
+        demo(String.format("Rates from %s to %s", monthAgo, today), client.range(Currency.KES_B, monthAgo, today));
     }
 
     private static void banner(String title) {
