@@ -16,6 +16,7 @@ final class Rx {
         throw new AssertionError("Static utility");
     }
 
+    // TODO: Convert to Maybe emitter to handle a case where batch doesn't contain any rates
     /**
      * Convert retrofit {@link Call} to Rx {@link Single}
      * @param call to convert
