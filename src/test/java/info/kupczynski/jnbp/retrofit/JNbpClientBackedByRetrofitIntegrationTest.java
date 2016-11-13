@@ -47,7 +47,7 @@ public class JNbpClientBackedByRetrofitIntegrationTest {
     }
 
     @Test
-    public void shouldLatestSameLastRange() {
+    public void shouldLatestBeSameAsLastRange() {
         // We need to grab more, as there may be a long weekend
         List<CurrencyDailyRate> lastTenDays = client.range(EUR_A, LocalDate.now().minusDays(10), LocalDate.now())
                 .test()
@@ -63,5 +63,13 @@ public class JNbpClientBackedByRetrofitIntegrationTest {
 
     private List<CurrencyDailyRate> lastThreeElements(List<CurrencyDailyRate> lastTenDays) {
         return lastTenDays.subList(lastTenDays.size() - 3, lastTenDays.size());
+    }
+
+    @Test
+    public void shouldAllowLongRanges() {
+        client.range(EUR_A, LocalDate.of(2015, 11, 13), LocalDate.of(2016, 11, 13))
+                .test()
+                .awaitDone(5, TimeUnit.SECONDS)
+                .assertNoErrors();
     }
 }
