@@ -1,4 +1,4 @@
-package info.kupczynski.jnbp.model;
+package info.kupczynski.jnbp.api;
 
 import static java.util.Objects.requireNonNull;
 

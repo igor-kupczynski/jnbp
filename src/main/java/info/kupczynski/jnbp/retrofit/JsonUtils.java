@@ -1,13 +1,13 @@
-package info.kupczynski.jnbp;
+package info.kupczynski.jnbp.retrofit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 /**
- * Ugly static utility
+ * Ugly static utility, at least package-private
  */
-public final class JsonUtils {
+final class JsonUtils {
 
     private JsonUtils() {
         throw new AssertionError("static utility");

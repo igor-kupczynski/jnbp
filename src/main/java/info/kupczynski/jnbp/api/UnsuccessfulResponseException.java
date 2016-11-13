@@ -1,4 +1,4 @@
-package info.kupczynski.jnbp.retrofit;
+package info.kupczynski.jnbp.api;
 
 /**
  * Indicates an unsuccessful where a success is requried

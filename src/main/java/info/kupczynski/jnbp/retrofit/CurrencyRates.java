@@ -1,8 +1,10 @@
-package info.kupczynski.jnbp.model;
+package info.kupczynski.jnbp.retrofit;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import info.kupczynski.jnbp.api.Currency;
+import info.kupczynski.jnbp.api.CurrencyTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ import static java.util.Objects.requireNonNull;
  * Represents a list of daily rates for a given currency
  */
 @JsonIgnoreProperties(value = { "currency" })
-public class CurrencyRates {
+class CurrencyRates {
 
     private final Currency currency;
     private final List<DailyRate> rates;

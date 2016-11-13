@@ -1,4 +1,4 @@
-package info.kupczynski.jnbp.model;
+package info.kupczynski.jnbp.retrofit;
 
 import org.junit.Test;
 
@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 
-import static info.kupczynski.jnbp.JsonUtils.MAPPER;
+import static info.kupczynski.jnbp.retrofit.JsonUtils.MAPPER;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 

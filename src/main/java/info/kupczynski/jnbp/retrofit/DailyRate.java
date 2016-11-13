@@ -1,7 +1,9 @@
-package info.kupczynski.jnbp.model;
+package info.kupczynski.jnbp.retrofit;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import info.kupczynski.jnbp.api.Currency;
+import info.kupczynski.jnbp.api.CurrencyDailyRate;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,13 +15,13 @@ import static java.util.Objects.requireNonNull;
  *
  * It can be either a mid market rate or bid and ask rates.
  */
-public class DailyRate {
+class DailyRate {
 
-    private final String rateId;
-    private final LocalDate effectiveDate;
-    private final BigDecimal mid;
-    private final BigDecimal bid;
-    private final BigDecimal ask;
+    public final String rateId;
+    public final LocalDate effectiveDate;
+    public final BigDecimal mid;
+    public final BigDecimal bid;
+    public final BigDecimal ask;
 
     @JsonCreator
     public DailyRate(
@@ -38,24 +40,8 @@ public class DailyRate {
         this.ask = ask;
     }
 
-    public String getRateId() {
-        return rateId;
-    }
-
-    public LocalDate getEffectiveDate() {
-        return effectiveDate;
-    }
-
-    public BigDecimal getMid() {
-        return mid;
-    }
-
-    public BigDecimal getBid() {
-        return bid;
-    }
-
-    public BigDecimal getAsk() {
-        return ask;
+    public CurrencyDailyRate toCurrencyDailyRate(Currency currency) {
+        return new CurrencyDailyRate(currency, rateId, effectiveDate, mid, bid, ask);
     }
 
     @Override

@@ -1,6 +1,7 @@
-package info.kupczynski.jnbp.model;
+package info.kupczynski.jnbp.retrofit;
 
-import info.kupczynski.jnbp.JsonUtils;
+import info.kupczynski.jnbp.retrofit.DailyRate;
+import info.kupczynski.jnbp.retrofit.JsonUtils;
 import org.junit.Test;
 
 import java.io.IOException;

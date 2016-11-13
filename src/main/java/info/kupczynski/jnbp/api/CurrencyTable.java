@@ -1,4 +1,4 @@
-package info.kupczynski.jnbp.model;
+package info.kupczynski.jnbp.api;
 
 /**
  * Table is a set of currencies which rates are updated on the same schedule.

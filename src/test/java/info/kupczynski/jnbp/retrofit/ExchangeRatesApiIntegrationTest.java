@@ -1,7 +1,5 @@
 package info.kupczynski.jnbp.retrofit;
 
-import info.kupczynski.jnbp.model.CurrencyRates;
-import info.kupczynski.jnbp.model.DailyRate;
 import org.junit.Before;
 import org.junit.Test;
 import retrofit2.Call;

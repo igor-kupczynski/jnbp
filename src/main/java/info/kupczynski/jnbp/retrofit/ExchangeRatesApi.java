@@ -1,6 +1,5 @@
 package info.kupczynski.jnbp.retrofit;
 
-import info.kupczynski.jnbp.model.CurrencyRates;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

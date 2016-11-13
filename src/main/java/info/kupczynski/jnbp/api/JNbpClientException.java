@@ -1,4 +1,4 @@
-package info.kupczynski.jnbp.retrofit;
+package info.kupczynski.jnbp.api;
 
 /**
  * Generic client exception, examine the {@code cause} for more details

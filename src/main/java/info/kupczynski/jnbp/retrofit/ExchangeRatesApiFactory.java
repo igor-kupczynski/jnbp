@@ -1,6 +1,5 @@
 package info.kupczynski.jnbp.retrofit;
 
-import info.kupczynski.jnbp.JsonUtils;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 

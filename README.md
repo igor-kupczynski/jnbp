@@ -9,127 +9,89 @@ API to access the exchange rates](http://api.nbp.pl/en.html).
 
 **Note** This is a work in progress.
 
-## Thin client
+## Client
 
-This is a thin wrapper around the API provided by NBP. Its aim is to provide 
-a 1:1 implementation of the functions available in the NBP Currency Exchange
-API.
+The client offers reactive wrapper around NBP Web API
  
-#### Examples
+## Examples
 
 See the [Demo.java](./src/main/java/info/kupczynski/jnbp/Demo.java) class.
 
-- Create the client
-  ```java
-  JNbpClient client = new JNbpClient();
-  ```
+- Given some helper functions
+    ```java
+    private static void demo(String title, Observable<CurrencyDailyRate> rates) {
+        System.out.println("### " + title);
+        rates.blockingForEach(rate -> System.out.println("* " + rate));
+        System.out.println();
+    }
 
-- Queries for particular currency
-    
-    * Current mid-market exchange rate for "EUR" in table "A" 
-        ```java
-        CurrencyRates rates = client.current(Currency.EUR_A);
-        ```
-        
-        *returns*:
-        ```
-        CurrencyRates{currency=EUR_A, rates=[
-            DailyRate{rateId='214/A/NBP/2016', effectiveDate=2016-11-04, mid=4.3133, bid=null, ask=null}
-        ]}
-        ```
-    
-    * Series of latest 3 exchange rates
-        ```java
-        CurrencyRates rates = client.latest(Currency.EUR_A, 3);
-        ```
-        
-        *returns*:
-        ```
-        CurrencyRates{currency=EUR_A, rates=[
-            DailyRate{rateId='212/A/NBP/2016', effectiveDate=2016-11-02, mid=4.3169, bid=null, ask=null},
-            DailyRate{rateId='213/A/NBP/2016', effectiveDate=2016-11-03, mid=4.3238, bid=null, ask=null},
-            DailyRate{rateId='214/A/NBP/2016', effectiveDate=2016-11-04, mid=4.3133, bid=null, ask=null}
-        ]}
-        ```
-        
-    * Exchange rate for today (may not exist)
-        ```java
-        Optional<CurrencyRates> rates = client.today(Currency.EUR_A);
-        ```
-        
-        *returns*:
-        ```
-        Optional[
-            CurrencyRates{currency=EUR_A, rates=[
-                DailyRate{rateId='214/A/NBP/2016', effectiveDate=2016-11-04, mid=4.3133, bid=null, ask=null}
-            ]}
-        ]    
-        ```
-    
-    * Exchange rate for a given day (may not exist)
-        ```java
-        Optional<CurrencyRates> rates = client.day(Currency.EUR_A, LocalDate.of(2016, 11, 4))
-        ```
-        
-        *returns*:
-        ```
-        Optional[
-            CurrencyRates{currency=EUR_A, rates=[
-                DailyRate{rateId='214/A/NBP/2016', effectiveDate=2016-11-04, mid=4.3133, bid=null, ask=null}
-            ]}
-        ]
-        ```
-    
-    * Exchange rate between two dates 
-        ```java
-        CurrencyRates rates = client.range(Currency.EUR_A, LocalDate.of(2016, 11, 2), LocalDate.of(2016, 11, 4));
-        ```
-        
-        *returns*:
-        ```
-        CurrencyRates{currency=EUR_A, rates=[
-            DailyRate{rateId='212/A/NBP/2016', effectiveDate=2016-11-02, mid=4.3169, bid=null, ask=null},
-            DailyRate{rateId='213/A/NBP/2016', effectiveDate=2016-11-03, mid=4.3238, bid=null, ask=null},
-            DailyRate{rateId='214/A/NBP/2016', effectiveDate=2016-11-04, mid=4.3133, bid=null, ask=null}
-        ]}                
-        ```
-    
-    * Less popular currencies are updated once a week and stored in table "B"
-        ```java
-        CurrencyRates rates = client.current(Currency.KES_B);
-        ```
-        
-        *returns*:
-        ```
-        CurrencyRates{currency=KES_B, rates=[
-            DailyRate{rateId='044/B/NBP/2016', effectiveDate=2016-11-02, mid=0.038352, bid=null, ask=null}
-        ]}
-        ```
-    
-    * Bid-ask rates are stored in table "C"
-        ```java
-        CurrencyRates rates = client.current(Currency.EUR_C)
-        ```
-        
-        *returns*:
-        ```
-        CurrencyRates{currency=EUR_C, rates=[
-            DailyRate{rateId='214/C/NBP/2016', effectiveDate=2016-11-04, mid=null, bid=4.2832, ask=4.3698}
-        ]}
-        ```
+    private static void demo(String title, Single<CurrencyDailyRate> rate) {
+        System.out.println("### " + title);
+        System.out.println("* " + rate.blockingGet());
+        System.out.println();
+    }
+    ```
 
+- And a client
+    ```java
+    private JNbpClient client = JNbpClientFactory.create();
+    ```
+
+- The following code
+    ```java
+    banner("Single currency, Euro, Table A");
+    demo("Current rate", client.current(Currency.EUR_A));
+    demo("Latest 3 rates", client.latest(Currency.EUR_A, 3));
+    demo("Rates from 2016-11-01 to 2016-11-05", client.range(Currency.EUR_A, LocalDate.of(2016, 11, 1), LocalDate.of(2016, 11, 5)));
+
+    banner("Bid ask rates are stored in table C");
+    demo("Latest 3 rates", client.latest(Currency.EUR_C, 3));
+
+    banner("Less popular currencies are stored in table B and updated weekly");
+    demo("Rates from 2016-10-01 to 2016-11-01", client.range(Currency.KES_B, LocalDate.of(2016, 10, 1), LocalDate.of(2016, 11, 1)));
+    ```
+    
+- Produces the following input
+    ```mardown
+    Single currency, Euro, Table A
+    ------------------------------
+    
+    ### Current rate
+    * CurrencyDailyRate{currency=EUR_A, rateId='218/A/NBP/2016', effectiveDate=2016-11-10, mid=4.3424, bid=null, ask=null}
+    
+    ### Latest 3 rates
+    * CurrencyDailyRate{currency=EUR_A, rateId='216/A/NBP/2016', effectiveDate=2016-11-08, mid=4.3285, bid=null, ask=null}
+    * CurrencyDailyRate{currency=EUR_A, rateId='217/A/NBP/2016', effectiveDate=2016-11-09, mid=4.3455, bid=null, ask=null}
+    * CurrencyDailyRate{currency=EUR_A, rateId='218/A/NBP/2016', effectiveDate=2016-11-10, mid=4.3424, bid=null, ask=null}
+    
+    ### Rates from 2016-11-01 to 2016-11-05
+    * CurrencyDailyRate{currency=EUR_A, rateId='212/A/NBP/2016', effectiveDate=2016-11-02, mid=4.3169, bid=null, ask=null}
+    * CurrencyDailyRate{currency=EUR_A, rateId='213/A/NBP/2016', effectiveDate=2016-11-03, mid=4.3238, bid=null, ask=null}
+    * CurrencyDailyRate{currency=EUR_A, rateId='214/A/NBP/2016', effectiveDate=2016-11-04, mid=4.3133, bid=null, ask=null}
+    
+    Bid ask rates are stored in table C
+    -----------------------------------
+    
+    ### Latest 3 rates
+    * CurrencyDailyRate{currency=EUR_C, rateId='216/C/NBP/2016', effectiveDate=2016-11-08, mid=null, bid=4.2919, ask=4.3787}
+    * CurrencyDailyRate{currency=EUR_C, rateId='217/C/NBP/2016', effectiveDate=2016-11-09, mid=null, bid=4.2903, ask=4.3769}
+    * CurrencyDailyRate{currency=EUR_C, rateId='218/C/NBP/2016', effectiveDate=2016-11-10, mid=null, bid=4.2983, ask=4.3851}
+    
+    Less popular currencies are stored in table B and updated weekly
+    ----------------------------------------------------------------
+    
+    ### Rates from 2016-10-01 to 2016-11-01
+    * CurrencyDailyRate{currency=KES_B, rateId='040/B/NBP/2016', effectiveDate=2016-10-05, mid=0.037866, bid=null, ask=null}
+    * CurrencyDailyRate{currency=KES_B, rateId='041/B/NBP/2016', effectiveDate=2016-10-12, mid=0.038237, bid=null, ask=null}
+    * CurrencyDailyRate{currency=KES_B, rateId='042/B/NBP/2016', effectiveDate=2016-10-19, mid=0.038785, bid=null, ask=null}
+    * CurrencyDailyRate{currency=KES_B, rateId='043/B/NBP/2016', effectiveDate=2016-10-26, mid=0.039003, bid=null, ask=null}
+    ```
 
 ## Implementation Status
 
-* **Thin client**
-    - [ ] Queries for complete tables
-    - [X] Queries for particular currency
-    - [ ] Queries for gold prices
-
-* **JavaRx client**
-    - [ ] Queries for complete tables
-    - [ ] Queries for particular currency
-    - [ ] Queries for gold prices
+- [ ] Queries for complete tables
+- [X] Queries for particular currency
+- [ ] Queries for gold prices
 
 ## Disclaimer
 

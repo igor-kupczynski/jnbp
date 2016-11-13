@@ -1,7 +1,11 @@
 package info.kupczynski.jnbp;
 
-import info.kupczynski.jnbp.model.Currency;
-import info.kupczynski.jnbp.retrofit.JNbpClient;
+import info.kupczynski.jnbp.api.Currency;
+import info.kupczynski.jnbp.api.CurrencyDailyRate;
+import info.kupczynski.jnbp.api.JNbpClient;
+import info.kupczynski.jnbp.retrofit.JNbpClientFactory;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -9,43 +13,43 @@ import java.time.LocalDate;
 public class Demo {
 
     public static void main(String[] args) throws IOException {
-        JNbpClient client = new JNbpClient();
+        new Demo().run();
+    }
 
-        System.out.println("# Single currency rates demo - EUR, table A");
+    private JNbpClient client = JNbpClientFactory.create();
+
+    private void run() {
+        System.out.println("JNbpClient demo");
+        System.out.println("===============");
         System.out.println();
 
-        System.out.println("## Current rate");
-        System.out.println(client.current(Currency.EUR_A));
-        System.out.println("");
+        banner("Single currency, Euro, Table A");
+        demo("Current rate", client.current(Currency.EUR_A));
+        demo("Latest 3 rates", client.latest(Currency.EUR_A, 3));
+        demo("Rates from 2016-11-01 to 2016-11-05", client.range(Currency.EUR_A, LocalDate.of(2016, 11, 1), LocalDate.of(2016, 11, 5)));
 
-        System.out.println("## Latest 3 rates");
-        System.out.println(client.latest(Currency.EUR_A, 3));
-        System.out.println("");
+        banner("Bid ask rates are stored in table C");
+        demo("Latest 3 rates", client.latest(Currency.EUR_C, 3));
 
-        System.out.println("## Rate for today (may not exist)");
-        System.out.println(client.today(Currency.EUR_A));
-        System.out.println("");
+        banner("Less popular currencies are stored in table B and updated weekly");
+        demo("Rates from 2016-10-01 to 2016-11-01", client.range(Currency.KES_B, LocalDate.of(2016, 10, 1), LocalDate.of(2016, 11, 1)));
+    }
 
-        System.out.println("## Rate for 2016-11-04");
-        System.out.println(client.day(Currency.EUR_A, LocalDate.of(2016, 11, 4)));
-        System.out.println("");
-
-        System.out.println("## Rates for 2016-11-01 to 2016-11-05");
-        System.out.println(client.range(Currency.EUR_A, LocalDate.of(2016, 11, 1), LocalDate.of(2016, 11, 5)));
-        System.out.println("");
-
-        System.out.println("# Less popular currencies are updated weekly and stored in table B");
+    private static void banner(String title) {
+        System.out.println(title);
+        System.out.println(new String(new char[title.length()]).replace("\0", "-"));
         System.out.println();
+    }
 
-        System.out.println("## Current rate");
-        System.out.println(client.current(Currency.KES_B));
-        System.out.println("");
-
-        System.out.println("# Bid-ask rates for some of the currencies are stored in table C");
+    private static void demo(String title, Observable<CurrencyDailyRate> rates) {
+        System.out.println("### " + title);
+        rates.blockingForEach(rate -> System.out.println("* " + rate));
         System.out.println();
+    }
 
-        System.out.println("## Current rate");
-        System.out.println(client.current(Currency.EUR_C));
-        System.out.println("");
+    private static void demo(String title, Single<CurrencyDailyRate> rate) {
+        System.out.println("### " + title);
+        System.out.println("* " + rate.blockingGet());
+        System.out.println();
     }
 }
