@@ -1,9 +1,9 @@
-package info.kupczynski.jnbp.api;
+package info.kupczynski.jnbp.retrofit;
 
 /**
- * Indicates an unsuccessful where a success is requried
+ * Indicates an unsuccessful where a success is required
  */
-public class UnsuccessfulResponseException extends JNbpClientException {
+public class UnsuccessfulResponseException extends RuntimeException {
 
     private final int code;
     private final String response;
