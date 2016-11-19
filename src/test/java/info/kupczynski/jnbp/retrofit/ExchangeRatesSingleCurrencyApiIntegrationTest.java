@@ -14,7 +14,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
-public class ExchangeRatesApiIntegrationTest {
+public class ExchangeRatesSingleCurrencyApiIntegrationTest {
 
     private ExchangeRatesApi api;
 
