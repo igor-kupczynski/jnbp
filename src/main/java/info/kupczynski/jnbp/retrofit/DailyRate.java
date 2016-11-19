@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Represents a currency mid for a given day.
+ * Represents a currency mid rate (or a bid/ask pair) for a given day.
  *
  * It can be either a mid market rate or bid and ask rates.
  */

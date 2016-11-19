@@ -39,7 +39,7 @@ class JNbpClientBackedByRetrofit implements info.kupczynski.jnbp.api.JNbpClient 
 
     private static Observable<CurrencyDailyRate> call2Observable(Currency currency, Call<CurrencyRates> call) {
         return Rx.observe(call)
-                .map(currencyRates -> currencyRates.getRates())
+                .map(currencyRates -> currencyRates.rates)
                 .flatMap(Observable::fromIterable)
                 .map(dailyRate -> dailyRate.toCurrencyDailyRate(currency));
     }

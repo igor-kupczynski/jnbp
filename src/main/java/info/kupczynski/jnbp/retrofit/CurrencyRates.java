@@ -17,26 +17,17 @@ import static java.util.Objects.requireNonNull;
 @JsonIgnoreProperties(value = { "currency" })
 class CurrencyRates {
 
-    private final Currency currency;
-    private final List<DailyRate> rates;
+    public final Currency currency;
+    public final List<DailyRate> rates;
 
     @JsonCreator
     public CurrencyRates(
             @JsonProperty("table") String table,
             @JsonProperty("code") String code,
             @JsonProperty("rates") List<DailyRate> rates) {
-
         CurrencyTable ct = CurrencyTable.valueOf(table);
         this.currency = Currency.valueOf(ct, code);
         this.rates = new ArrayList<>(requireNonNull(rates));
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public List<DailyRate> getRates() {
-        return rates;
     }
 
     @Override
