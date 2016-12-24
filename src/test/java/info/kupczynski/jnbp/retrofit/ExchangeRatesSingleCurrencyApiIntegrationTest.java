@@ -14,7 +14,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
-public class ExchangeRatesApiIntegrationTest {
+public class ExchangeRatesSingleCurrencyApiIntegrationTest {
 
     private ExchangeRatesApi api;
 
@@ -33,7 +33,7 @@ public class ExchangeRatesApiIntegrationTest {
 
     @Test
     public void shouldReturnValidExchangeRateForATable() throws IOException {
-        List<DailyRate> rates = api.day("A", "EUR", LocalDate.of(2016, 11, 4)).execute().body().getRates();
+        List<DailyRate> rates = api.day("A", "EUR", LocalDate.of(2016, 11, 4)).execute().body().rates;
 
         DailyRate expected = new DailyRate("214/A/NBP/2016", LocalDate.of(2016, 11, 4),
                 new BigDecimal("4.3133"), null, null);
@@ -42,7 +42,7 @@ public class ExchangeRatesApiIntegrationTest {
 
     @Test
     public void shouldReturnValidExchangeRateForBTable() throws IOException {
-        List<DailyRate> rates = api.day("B", "AFN", LocalDate.of(2016, 11, 2)).execute().body().getRates();
+        List<DailyRate> rates = api.day("B", "AFN", LocalDate.of(2016, 11, 2)).execute().body().rates;
 
         DailyRate expected = new DailyRate("044/B/NBP/2016", LocalDate.of(2016, 11, 2),
                 new BigDecimal("0.059043"), null, null);
@@ -51,7 +51,7 @@ public class ExchangeRatesApiIntegrationTest {
 
     @Test
     public void shouldReturnValidExchangeRateForCTable() throws IOException {
-        List<DailyRate> rates = api.day("C", "EUR", LocalDate.of(2016, 11, 4)).execute().body().getRates();
+        List<DailyRate> rates = api.day("C", "EUR", LocalDate.of(2016, 11, 4)).execute().body().rates;
 
         DailyRate expected = new DailyRate("214/C/NBP/2016", LocalDate.of(2016, 11, 4),
                 null, new BigDecimal("4.2832"), new BigDecimal("4.3698"));

@@ -87,9 +87,52 @@ See the [Demo.java](./src/main/java/info/kupczynski/jnbp/Demo.java) class.
     * CurrencyDailyRate{currency=KES_B, rateId='043/B/NBP/2016', effectiveDate=2016-10-26, mid=0.039003, bid=null, ask=null}
     ```
 
+- Replace currency with a table to get all the full table instead of a single currency
+    ```java
+    client.current(CurrencyTable.A)
+    ```
+    
+    ```markdown
+    * CurrencyDailyRate{currency=THB_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.1173, bid=null, ask=null}
+    * CurrencyDailyRate{currency=USD_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=4.2199, bid=null, ask=null}
+    * CurrencyDailyRate{currency=AUD_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=3.0412, bid=null, ask=null}
+    * CurrencyDailyRate{currency=HKD_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.5438, bid=null, ask=null}
+    * CurrencyDailyRate{currency=CAD_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=3.1284, bid=null, ask=null}
+    * CurrencyDailyRate{currency=NZD_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=2.9157, bid=null, ask=null}
+    * CurrencyDailyRate{currency=SGD_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=2.9194, bid=null, ask=null}
+    * CurrencyDailyRate{currency=EUR_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=4.4126, bid=null, ask=null}
+    * CurrencyDailyRate{currency=HUF_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.014231, bid=null, ask=null}
+    * CurrencyDailyRate{currency=CHF_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=4.1170, bid=null, ask=null}
+    * CurrencyDailyRate{currency=GBP_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=5.1815, bid=null, ask=null}
+    * CurrencyDailyRate{currency=UAH_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.1605, bid=null, ask=null}
+    * CurrencyDailyRate{currency=JPY_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.03597, bid=null, ask=null}
+    * CurrencyDailyRate{currency=CZK_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.1633, bid=null, ask=null}
+    * CurrencyDailyRate{currency=DKK_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.5935, bid=null, ask=null}
+    * CurrencyDailyRate{currency=ISK_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.03719, bid=null, ask=null}
+    * CurrencyDailyRate{currency=NOK_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.4841, bid=null, ask=null}
+    * CurrencyDailyRate{currency=SEK_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.4576, bid=null, ask=null}
+    * CurrencyDailyRate{currency=HRK_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.5858, bid=null, ask=null}
+    * CurrencyDailyRate{currency=RON_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.9734, bid=null, ask=null}
+    * CurrencyDailyRate{currency=BGN_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=2.2561, bid=null, ask=null}
+    * CurrencyDailyRate{currency=TRY_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=1.2025, bid=null, ask=null}
+    * CurrencyDailyRate{currency=ILS_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=1.1013, bid=null, ask=null}
+    * CurrencyDailyRate{currency=CLP_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.00625, bid=null, ask=null}
+    * CurrencyDailyRate{currency=PHP_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.0849, bid=null, ask=null}
+    * CurrencyDailyRate{currency=MXN_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.2036, bid=null, ask=null}
+    * CurrencyDailyRate{currency=ZAR_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.3018, bid=null, ask=null}
+    * CurrencyDailyRate{currency=BRL_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=1.2838, bid=null, ask=null}
+    * CurrencyDailyRate{currency=MYR_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.9433, bid=null, ask=null}
+    * CurrencyDailyRate{currency=RUB_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.0692, bid=null, ask=null}
+    * CurrencyDailyRate{currency=IDR_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.00031375, bid=null, ask=null}
+    * CurrencyDailyRate{currency=INR_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.062224, bid=null, ask=null}
+    * CurrencyDailyRate{currency=KRW_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.003504, bid=null, ask=null}
+    * CurrencyDailyRate{currency=CNY_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=0.6074, bid=null, ask=null}
+    * CurrencyDailyRate{currency=XDR_A, rateId='248/A/NBP/2016', effectiveDate=2016-12-23, mid=5.6622, bid=null, ask=null}
+    ```
+
 ## Implementation Status
 
-- [ ] Queries for complete tables
+- [X] Queries for complete tables
 - [X] Queries for particular currency
 - [ ] Queries for gold prices
 

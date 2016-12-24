@@ -13,6 +13,33 @@ import java.time.LocalDate;
 public interface JNbpClient {
 
     /**
+     * Fetch all the daily exchange rates from the given table between two dates, inclusive.
+     *
+     * @param table to fetch the rates for
+     * @param start return the rates starting from this date
+     * @param end   return the rates ending at this date
+     * @return sequence of {@link CurrencyDailyRate} between {@code [start, end]} dates
+     */
+    Observable<CurrencyDailyRate> range(CurrencyTable table, LocalDate start, LocalDate end);
+
+    /**
+     * Fetch the current, i.e. last published, exchange rates for the given table.
+     *
+     * @param table to fetch the current rate for
+     * @return current {@link CurrencyDailyRate}
+     */
+    Observable<CurrencyDailyRate> current(CurrencyTable table);
+
+    /**
+     * Fetch the n-latest daily exchange rates for the given table
+     *
+     * @param table to fetch the rates for
+     * @param n number of rates to fetch
+     * @return sequence of {@code n} last {@link CurrencyDailyRate}
+     */
+    Observable<CurrencyDailyRate> latest(CurrencyTable table, int n);
+
+    /**
      * Fetch all the daily exchange rates for the given currency between two dates, inclusive.
      *
      * @param currency to fetch the rates for
@@ -34,7 +61,7 @@ public interface JNbpClient {
      * Fetch the n-latest daily exchange rates for the given currency
      *
      * @param currency to fetch the rates for
-     * @param n number of rates to fetch
+     * @param n        number of rates to fetch
      * @return sequence of {@code n} last {@link CurrencyDailyRate}
      */
     Observable<CurrencyDailyRate> latest(Currency currency, int n);
