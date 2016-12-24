@@ -2,6 +2,7 @@ package info.kupczynski.jnbp;
 
 import info.kupczynski.jnbp.api.Currency;
 import info.kupczynski.jnbp.api.CurrencyDailyRate;
+import info.kupczynski.jnbp.api.CurrencyTable;
 import info.kupczynski.jnbp.api.JNbpClient;
 import info.kupczynski.jnbp.retrofit.JNbpClientFactory;
 import io.reactivex.Observable;
@@ -39,6 +40,17 @@ public class Demo {
 
         banner("Less popular currencies are stored in table B and updated weekly");
         demo(String.format("Rates from %s to %s", monthAgo, today), client.range(Currency.KES_B, monthAgo, today));
+
+        banner("Table A");
+        demo("Current rate", client.current(CurrencyTable.A));
+        demo("Latest 2 rates", client.latest(CurrencyTable.A, 3));
+        demo(String.format("Rates from %s to %s", weekAgo, today), client.range(CurrencyTable.A, weekAgo, today));
+
+        banner("Bid ask rates are stored in table C");
+        demo("Latest 2 rates", client.latest(CurrencyTable.C, 2));
+
+        banner("Less popular currencies are stored in table B and updated weekly");
+        demo(String.format("Rates from %s to %s", monthAgo, today), client.range(CurrencyTable.B, monthAgo, today));
     }
 
     private static void banner(String title) {

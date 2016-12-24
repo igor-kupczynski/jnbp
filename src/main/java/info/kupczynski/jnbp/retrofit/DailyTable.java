@@ -3,11 +3,14 @@ package info.kupczynski.jnbp.retrofit;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import info.kupczynski.jnbp.api.Currency;
+import info.kupczynski.jnbp.api.CurrencyDailyRate;
 import info.kupczynski.jnbp.api.CurrencyTable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
@@ -32,6 +35,18 @@ class DailyTable {
         this.rateId = requireNonNull(rateId);
         this.effectiveDate = requireNonNull(effectiveDate);
         this.rates = new ArrayList<>(requireNonNull(rates));
+    }
+
+    public List<CurrencyDailyRate> toCurrencyDailyRates() {
+        return rates.stream()
+                .map(rate -> new CurrencyDailyRate(
+                        Currency.valueOf(table, rate.currencyCode),
+                        rateId,
+                        effectiveDate,
+                        rate.mid,
+                        rate.bid,
+                        rate.ask))
+                .collect(Collectors.toList());
     }
 
     @Override
