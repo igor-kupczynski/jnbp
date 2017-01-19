@@ -13,7 +13,7 @@ import java.util.List;
 
 class JNbpClientBackedByRetrofit implements info.kupczynski.jnbp.api.JNbpClient {
 
-    private static final long MAX_DAYS_PER_BATCH = 365;
+    private static final long MAX_DAYS_PER_BATCH = 90;
 
     private final ExchangeRatesApi exchangeRatesApi =  ExchangeRatesApiFactory.create();
 
@@ -21,8 +21,11 @@ class JNbpClientBackedByRetrofit implements info.kupczynski.jnbp.api.JNbpClient 
 
     @Override
     public Observable<CurrencyDailyRate> range(CurrencyTable table, LocalDate start, LocalDate end) {
-        Call<List<DailyTable>> call = exchangeRatesApi.range(table.name(), start, end);
-        return call2Observable(call);
+        Collection<DateRange> batches = DateRange.fromInclusive(start, end).split(MAX_DAYS_PER_BATCH);
+
+        return Observable.fromIterable(batches)
+                .map(batch -> exchangeRatesApi.range(table.name(), batch.from, batch.getLastIncludedDay()))
+                .concatMap(call -> call2Observable(call));
     }
 
     @Override

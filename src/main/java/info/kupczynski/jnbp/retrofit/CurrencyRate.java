@@ -11,7 +11,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * Represents a currency mid rate (or bid/ask pair) as stored in {@link DailyTable}
  */
-@JsonIgnoreProperties(value = { "currency" })
+@JsonIgnoreProperties(value = { "currency", "country", "symbol" })
 class CurrencyRate {
 
     public final String currencyCode;
