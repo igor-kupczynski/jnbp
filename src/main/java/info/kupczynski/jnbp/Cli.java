@@ -24,17 +24,23 @@ public class Cli {
             .registerModule(new Jdk8Module())
             .registerModule(new JavaTimeModule());
 
-    @Parameter(names = {"--start-date"}, description = "Grab the rates starting from this date. Defaults to 2002-01-01")
+    @Parameter(names = {"--start-date"}, description = "Grab the rates starting from this date.")
     private String startDate = "2002-01-01";
 
-    @Parameter(names = {"--end-date"}, description = "Last date to grab the rates for. Defaults to today")
+    @Parameter(names = {"--end-date"}, description = "Last date to grab the rates for.")
     private String endDate = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
 
-    @Parameter(names = {"--table"}, description = "Which rate table to use. Defaults to 'A'")
+    @Parameter(names = {"--table"}, description = "Which rate table to use.")
     private String table = "A";
 
-    @Parameter(names = {"--batch"}, description = "Use elasticsearch batch syntax. Defaults to false")
+    @Parameter(names = {"--batch"}, description = "Use elasticsearch batch syntax.")
     private boolean batch = false;
+
+    @Parameter(names = {"--index"}, description = "Index name to use if --batch is selected.")
+    private String indexName = "rates";
+
+    @Parameter(names = {"--help"}, description = "Display help", help = true)
+    private boolean help = false;
 
     private Cli() {
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
@@ -42,8 +48,12 @@ public class Cli {
 
     public static void main(String[] args) {
         Cli cli = new Cli();
-        new JCommander(cli, args);
-        cli.run();
+        JCommander jCommander = new JCommander(cli, args);
+        if (!cli.help) {
+            cli.run();
+        } else {
+            jCommander.usage();
+        }
     }
 
     private void run() {
@@ -53,7 +63,7 @@ public class Cli {
                 parseDate(endDate));
         range.blockingForEach(rate -> {
             if (batch) {
-                BatchOp op = BatchOp.index("rates", table, rate.rateId + "/" + rate.currency.code);
+                BatchOp op = BatchOp.index(indexName, table, rate.rateId + "/" + rate.currency.code);
                 System.out.println(mapper.writeValueAsString(op));
             }
             System.out.println(mapper.writeValueAsString(rate));
